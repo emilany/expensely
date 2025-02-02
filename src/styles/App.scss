@@ -1,0 +1,42 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 50px;
+
+  &__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    margin-top: 24px;
+
+    @media (min-width: 768px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 24px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    align-self: center;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  @media (min-width: 992px) {
+    max-width: 970px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1200px;
+  }
+}
