@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import AddExpenseFormModal from './components/AddExpenseFormModal'
 import ExpenseChart from './components/ExpenseChart'
@@ -11,14 +11,17 @@ const App = () => {
   const [expenses, setExpenses] = useState<Expense[]>([])
   const [isOpenExpenseFormModal, setIsOpenExpenseFormModal] = useState(false)
 
-  useEffect(() => {
+  const handleUpdateExpenses = useCallback(() => {
     const storedExpenses = getFromStorage(STORAGE_KEY)
     if (storedExpenses) setExpenses(JSON.parse(storedExpenses))
   }, [])
 
+  useEffect(handleUpdateExpenses, [])
+
   const handleSaveExpense = (expense: Expense) => {
     const updatedExpenses = [expense, ...expenses]
     saveToStorage(STORAGE_KEY, JSON.stringify(updatedExpenses))
+    handleUpdateExpenses()
   }
 
   const handleOpenExpenseFormModal = () => setIsOpenExpenseFormModal(true)
