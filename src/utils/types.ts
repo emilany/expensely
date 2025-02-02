@@ -5,3 +5,10 @@ export type Expense = {
   category: string
   dateAdded: number
 }
+
+export enum ExpenseSortCriteria {
+  NAME = 'name',
+  DATE = 'dateAdded',
+  AMOUNT = 'amount',
+  CATEGORY = 'category',
+}
