@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Button, Form, Modal } from 'react-bootstrap'
+import { Button, Form, InputGroup, Modal } from 'react-bootstrap'
+import { ExpenseCategories } from '../utils/constants'
 import { Expense } from '../utils/types'
 
 type Props = {
@@ -27,7 +28,7 @@ const AddExpenseFormModal = ({ isOpen, onSaveExpense, onClose }: Props) => {
     setAmountError(undefined)
   }
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value)
     setCategoryError(undefined)
   }
@@ -54,11 +55,12 @@ const AddExpenseFormModal = ({ isOpen, onSaveExpense, onClose }: Props) => {
       return
     }
 
+    const categoryIndex = Number(category) - 1
     onSaveExpense({
       id: crypto.randomUUID(),
       name,
       amount: amountAsNumber,
-      category,
+      category: ExpenseCategories[categoryIndex],
       dateAdded: Date.now(),
     })
 
@@ -83,23 +85,32 @@ const AddExpenseFormModal = ({ isOpen, onSaveExpense, onClose }: Props) => {
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Amount</Form.Label>
-          <Form.Control
-            required={true}
-            type="number"
-            min={1}
-            value={amount}
-            onChange={handleAmountChange}
-          />
+          <InputGroup>
+            <InputGroup.Text>€</InputGroup.Text>
+            <Form.Control
+              required={true}
+              type="number"
+              min={1}
+              value={amount}
+              onChange={handleAmountChange}
+            />
+          </InputGroup>
           <Form.Text>{amountError}</Form.Text>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Category</Form.Label>
-          <Form.Control
+          <Form.Select
             required={true}
-            placeholder="Travel"
             value={category}
             onChange={handleCategoryChange}
-          />
+          >
+            <option>Select a category</option>
+            {ExpenseCategories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </Form.Select>
           <Form.Text>{categoryError}</Form.Text>
         </Form.Group>
       </Modal.Body>

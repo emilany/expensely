@@ -2,8 +2,13 @@ export type Expense = {
   id: string
   name: string
   amount: number
-  category: string
+  category: ExpenseCategory
   dateAdded: number
+}
+
+export type ExpenseCategory = {
+  id: string
+  name: string
 }
 
 export enum ExpenseSortCriteria {

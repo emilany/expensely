@@ -1,34 +1,40 @@
-import { Dropdown } from 'react-bootstrap'
+import { useState } from 'react'
+import { Form } from 'react-bootstrap'
 import '../styles/CategoryDropdown.scss'
-import { Expense } from '../utils/types'
+import { ExpenseCategories } from '../utils/constants'
 
 type Props = {
-  expenses: Expense[]
-  onFilterExpenses: (category: string) => void
+  onFilterExpenses: (categoryId: string | undefined) => void
 }
 
-const CategoryDropdown = ({ expenses, onFilterExpenses }: Props) => {
-  const categories = expenses.reduce<string[]>((data, expense) => {
-    const category = expense.category.toLowerCase()
-    if (data.some((item) => item === category)) return data
-    return [...data, category]
-  }, [])
+const ALL_CATEGORIES_ID = '0'
+
+const CategoryDropdown = ({ onFilterExpenses }: Props) => {
+  const [category, setCategory] = useState<string>('')
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCategory = e.target.value
+    setCategory(selectedCategory)
+    onFilterExpenses(
+      selectedCategory === ALL_CATEGORIES_ID ? undefined : selectedCategory
+    )
+  }
 
   return (
-    <Dropdown className="category-dropdown mb-3">
-      <Dropdown.Toggle variant="secondary">Filter by Category</Dropdown.Toggle>
-
-      <Dropdown.Menu>
-        {categories.map((category) => (
-          <Dropdown.Item
-            key={category}
-            onClick={() => onFilterExpenses(category)}
-          >
-            {category}
-          </Dropdown.Item>
+    <div className="category-dropdown">
+      <Form.Select
+        required={true}
+        value={category}
+        onChange={handleCategoryChange}
+      >
+        <option value={ALL_CATEGORIES_ID}>All Categories</option>
+        {ExpenseCategories.map((category) => (
+          <option key={category.id} value={category.id}>
+            {category.name}
+          </option>
         ))}
-      </Dropdown.Menu>
-    </Dropdown>
+      </Form.Select>
+    </div>
   )
 }
 

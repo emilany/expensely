@@ -9,13 +9,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
   }
 
   &__content {
     display: flex;
     flex-direction: column;
     row-gap: 24px;
-    margin-top: 24px;
 
     @media (min-width: 768px) {
       display: grid;

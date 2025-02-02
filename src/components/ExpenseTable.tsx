@@ -2,15 +2,8 @@ import { format } from 'date-fns'
 import { useState } from 'react'
 import { Card, Table } from 'react-bootstrap'
 import '../styles/ExpenseTable.scss'
+import { dateFormat, ExpenseTableHeaders } from '../utils/constants'
 import { Expense, ExpenseSortCriteria } from '../utils/types'
-
-const dateFormat = 'LLLL d, yyyy'
-const ExpenseTableHeaders: { title: string; sort: ExpenseSortCriteria }[] = [
-  { title: 'Name', sort: ExpenseSortCriteria.NAME },
-  { title: 'Date', sort: ExpenseSortCriteria.DATE },
-  { title: 'Amount', sort: ExpenseSortCriteria.AMOUNT },
-  { title: 'Category', sort: ExpenseSortCriteria.CATEGORY },
-]
 
 type Props = {
   expenses: Expense[]
@@ -53,7 +46,7 @@ const ExpenseTable = ({ expenses }: Props) => {
               <td>{expense.name}</td>
               <td>{format(expense.dateAdded, dateFormat)}</td>
               <td>€{expense.amount.toFixed(2)}</td>
-              <td>{expense.category}</td>
+              <td>{expense.category.name}</td>
             </tr>
           ))}
         </tbody>

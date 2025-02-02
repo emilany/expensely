@@ -5,7 +5,8 @@ import CategoryDropdown from './components/CategoryDropdown'
 import ExpenseChart from './components/ExpenseChart'
 import ExpenseTable from './components/ExpenseTable'
 import './styles/App.scss'
-import { getFromStorage, saveToStorage, STORAGE_KEY } from './utils/storage'
+import { storageKey } from './utils/constants'
+import { getFromStorage, saveToStorage } from './utils/helpers'
 import { Expense } from './utils/types'
 
 const App = () => {
@@ -14,7 +15,7 @@ const App = () => {
   const [isOpenExpenseFormModal, setIsOpenExpenseFormModal] = useState(false)
 
   const handleUpdateExpenses = useCallback(() => {
-    const storedExpenses = getFromStorage(STORAGE_KEY)
+    const storedExpenses = getFromStorage(storageKey)
     if (storedExpenses) setExpenses(JSON.parse(storedExpenses))
   }, [])
 
@@ -22,7 +23,7 @@ const App = () => {
 
   const handleSaveExpense = (expense: Expense) => {
     const updatedExpenses = [expense, ...expenses]
-    saveToStorage(STORAGE_KEY, JSON.stringify(updatedExpenses))
+    saveToStorage(storageKey, JSON.stringify(updatedExpenses))
     handleUpdateExpenses()
   }
 
@@ -30,9 +31,11 @@ const App = () => {
 
   const handleCloseExpenseFormModal = () => setIsOpenExpenseFormModal(false)
 
-  const handleFilterExpenses = (category: string) => {
+  const handleFilterExpenses = (categoryId: string | undefined) => {
     setFilteredExpenses(
-      expenses.filter((expense) => expense.category.toLowerCase() === category)
+      categoryId
+        ? expenses.filter((expense) => expense.category.id === categoryId)
+        : expenses
     )
   }
 
@@ -46,17 +49,12 @@ const App = () => {
         </Button>
       </div>
 
-      <div className="app__content">
-        <div>
-          {expenses.length && (
-            <CategoryDropdown
-              expenses={expenses}
-              onFilterExpenses={handleFilterExpenses}
-            />
-          )}
-          <ExpenseTable expenses={filteredExpenses || expenses} />
-        </div>
+      {expenses.length > 0 && (
+        <CategoryDropdown onFilterExpenses={handleFilterExpenses} />
+      )}
 
+      <div className="app__content">
+        <ExpenseTable expenses={filteredExpenses || expenses} />
         <ExpenseChart />
       </div>
 
