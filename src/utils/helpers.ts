@@ -1,11 +1,5 @@
 import { Expense, ExpenseSortCriteria, SortOrder } from './types'
 
-export const saveToStorage = (key: string, data: string) => {
-  window.localStorage.setItem(key, data)
-}
-
-export const getFromStorage = (key: string) => window.localStorage.getItem(key)
-
 /**
  * Sorts a list of expenses based on a specified sort criteria and sort order.
  * An expense category is handled differently given it's an object.

@@ -1,6 +1,5 @@
 import { ExpenseCategory, ExpenseSortCriteria } from './types'
 
-export const storageKey = 'expensely_expenses'
 export const dateFormat = 'LLLL d, yyyy'
 
 export const ExpenseCategories: ExpenseCategory[] = [

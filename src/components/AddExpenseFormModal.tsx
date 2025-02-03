@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Button, Form, InputGroup, Modal } from 'react-bootstrap'
 import { ExpenseCategories } from '../utils/constants'
-import { Expense } from '../utils/types'
+import { AddNewExpenseRequest } from '../utils/types'
 
 type Props = {
   isOpen: boolean
-  onSaveExpense: (expense: Expense) => void
+  onSaveExpense: (expense: AddNewExpenseRequest) => void
   onClose: () => void
 }
 
@@ -57,11 +57,9 @@ const AddExpenseFormModal = ({ isOpen, onSaveExpense, onClose }: Props) => {
 
     const categoryIndex = Number(category) - 1
     onSaveExpense({
-      id: crypto.randomUUID(),
       name,
       amount: amountAsNumber,
       category: ExpenseCategories[categoryIndex],
-      dateAdded: Date.now(),
     })
 
     onClose()

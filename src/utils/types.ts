@@ -6,6 +6,8 @@ export type Expense = {
   dateAdded: number
 }
 
+export type AddNewExpenseRequest = Pick<Expense, 'name' | 'amount' | 'category'>
+
 export type ExpenseCategory = {
   id: string
   name: string
