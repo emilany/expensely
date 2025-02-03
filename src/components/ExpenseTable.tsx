@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { Card, Table } from 'react-bootstrap'
 import '../styles/ExpenseTable.scss'
 import { dateFormat, ExpenseTableHeaders } from '../utils/constants'
-import { Expense, ExpenseSortCriteria } from '../utils/types'
+import { getSortedExpenses } from '../utils/helpers'
+import { Expense, ExpenseSortCriteria, SortOrder } from '../utils/types'
 
 type Props = {
   expenses: Expense[]
@@ -13,20 +14,29 @@ const ExpenseTable = ({ expenses }: Props) => {
   const [sortCriteria, setSortCriteria] = useState<ExpenseSortCriteria>(
     ExpenseSortCriteria.DATE
   )
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASC)
 
   if (!expenses.length) {
     return (
       <Card className="expense-table expense-table--empty">
-        <h5>There are no expenses.</h5>
+        <h5>There are no expenses</h5>
       </Card>
     )
   }
 
-  const sortedExpenses = expenses.sort((a, b) => {
-    if (a[sortCriteria] > b[sortCriteria]) return 1
-    if (a[sortCriteria] < b[sortCriteria]) return -1
-    return 0
-  })
+  const sortedExpenses = getSortedExpenses(expenses, sortCriteria, sortOrder)
+
+  const handleTableSort = (updatedSortCriteria: ExpenseSortCriteria) => {
+    setSortCriteria(updatedSortCriteria)
+    // toggles the sort order if the criteria remains the same, otherwise resets to ASC
+    setSortOrder(
+      sortCriteria === updatedSortCriteria
+        ? sortOrder === SortOrder.ASC
+          ? SortOrder.DESC
+          : SortOrder.ASC
+        : SortOrder.ASC
+    )
+  }
 
   return (
     <Card className="expense-table">
@@ -34,7 +44,7 @@ const ExpenseTable = ({ expenses }: Props) => {
         <thead>
           <tr>
             {ExpenseTableHeaders.map((th) => (
-              <th key={th.title} onClick={() => setSortCriteria(th.sort)}>
+              <th key={th.title} onClick={() => handleTableSort(th.sort)}>
                 {th.title}
               </th>
             ))}

@@ -17,3 +17,8 @@ export enum ExpenseSortCriteria {
   AMOUNT = 'amount',
   CATEGORY = 'category',
 }
+
+export enum SortOrder {
+  ASC,
+  DESC,
+}
