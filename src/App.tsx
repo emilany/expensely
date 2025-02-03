@@ -32,11 +32,9 @@ const App = () => {
         },
         body: JSON.stringify(expense),
       })
-      const responseData = await response.json()
-      if (responseData) setExpenses(responseData)
+      if (response.ok) handleUpdateExpenses()
     }
     saveExpense()
-    handleUpdateExpenses()
   }
 
   const handleOpenExpenseFormModal = () => setIsOpenExpenseFormModal(true)
