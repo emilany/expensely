@@ -11,6 +11,7 @@ export type AddNewExpenseRequest = Pick<Expense, 'name' | 'amount' | 'category'>
 export type ExpenseCategory = {
   id: string
   name: string
+  color: string
 }
 
 export enum ExpenseSortCriteria {
