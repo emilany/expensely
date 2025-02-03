@@ -14,7 +14,7 @@ const ExpenseTable = ({ expenses }: Props) => {
   const [sortCriteria, setSortCriteria] = useState<ExpenseSortCriteria>(
     ExpenseSortCriteria.DATE
   )
-  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASC)
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESC)
 
   if (!expenses.length) {
     return (
