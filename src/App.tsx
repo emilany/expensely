@@ -5,6 +5,7 @@ import CategoryDropdown from './components/CategoryDropdown'
 import ExpenseChart from './components/ExpenseChart'
 import ExpenseTable from './components/ExpenseTable'
 import './styles/App.scss'
+import { fetchExpenses, saveExpense } from './utils/api'
 import { AddNewExpenseRequest, Expense } from './utils/types'
 
 const App = () => {
@@ -12,29 +13,17 @@ const App = () => {
   const [filteredExpenses, setFilteredExpenses] = useState<Expense[]>()
   const [isOpenExpenseFormModal, setIsOpenExpenseFormModal] = useState(false)
 
-  const handleUpdateExpenses = useCallback(() => {
-    const fetchExpenses = async () => {
-      const response = await fetch('http://localhost:5000/expenses')
-      const responseData = await response.json()
-      if (responseData) setExpenses(responseData)
-    }
-    fetchExpenses()
+  const handleUpdateExpenses = useCallback(async () => {
+    setExpenses(await fetchExpenses())
   }, [])
 
-  useEffect(handleUpdateExpenses, [])
+  useEffect(() => {
+    handleUpdateExpenses()
+  }, [])
 
-  const handleSaveExpense = (expense: AddNewExpenseRequest) => {
-    const saveExpense = async () => {
-      const response = await fetch('http://localhost:5000/expenses', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(expense),
-      })
-      if (response.ok) handleUpdateExpenses()
-    }
-    saveExpense()
+  const handleSaveExpense = async (expense: AddNewExpenseRequest) => {
+    const success = await saveExpense(expense)
+    if (success) await handleUpdateExpenses()
   }
 
   const handleOpenExpenseFormModal = () => setIsOpenExpenseFormModal(true)
