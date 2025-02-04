@@ -57,7 +57,7 @@ app.post('/expenses', (request, response) => {
     !expense ||
     !expense.name ||
     !expense.amount ||
-    isNaN(amount) ||
+    isNaN(expense.amount) ||
     expense.amount < 1 ||
     !expense.category
   ) {
