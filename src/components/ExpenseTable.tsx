@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Card, Table } from 'react-bootstrap'
 import '../styles/ExpenseTable.scss'
 import { dateFormat, ExpenseTableHeaders } from '../utils/constants'
-import { getSortedExpenses } from '../utils/helpers'
+import { getFormattedAmount, getSortedExpenses } from '../utils/helpers'
 import { Expense, ExpenseSortCriteria, SortOrder } from '../utils/types'
 
 type Props = {
@@ -16,7 +16,7 @@ const ExpenseTable = ({ expenses }: Props) => {
   )
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESC)
 
-  if (!expenses.length) {
+  if (expenses.length === 0) {
     return (
       <Card className="expense-table expense-table--empty">
         <h5>There are no expenses</h5>
@@ -55,7 +55,7 @@ const ExpenseTable = ({ expenses }: Props) => {
             <tr key={expense.id}>
               <td>{expense.name}</td>
               <td>{format(expense.dateAdded, dateFormat)}</td>
-              <td>€{expense.amount.toFixed(2)}</td>
+              <td>{getFormattedAmount(expense.amount)}</td>
               <td>{expense.category.name}</td>
             </tr>
           ))}
