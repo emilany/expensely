@@ -99,3 +99,8 @@ Example response:
 - This API stores data in a local JSON file.
 - Default category data is stored in the client so I've opted to store the category object for ease. This can be improved to just store reference to the category ID.
   - I can potentially setup a `getExpenseCategories` endpoint that returns all expense categories and the client doesn't need to handle storing it anymore.
+
+## Challenges Faced
+
+- Since I was new to Express.js, I had to do some discovery while building the server-side, especially in terms of saving/persisting the data. I ended up using node-localstorage as the setup is similar to storage with browsers.
+- Given the main server file is on javascript, types are not handled. There were some instances where I had to revisit the code (ie validation when saving an expense) so I could make sure I was accessing the right variables inside the expense.

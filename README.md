@@ -1,50 +1,83 @@
-# React + TypeScript + Vite
+# Expensely
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Expensely is an expense-tracking web application that allows users to record and categorise their expenses. This repository contains the client-side React application.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Add new expenses with category selection
+- View list of expenses in a table
+- Filter expenses by category
+- View expense distribution by category through a pie chart
+- Persistent storage usingt the Expensely API
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [Node.js](https://nodejs.org/) installed
+- [PNPM](https://pnpm.io) installed
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/emilany/expensely.git
+   ```
+2. Install dependencies:
+   ```sh
+   pnpm i
+   ```
+
+## Running the App
+
+Start the app with:
+
+```sh
+pnpm dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+This will start the React app at `http://localhost:44345/`.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## API Integration
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
+The client communicates with the Expensely API to store and retrieve expense data.
+
+### Fetch Expenses
+
+```ts
+const expenses = await fetchExpenses()
+console.log(expenses)
+```
+
+### Save a New Expense
+
+```ts
+const success = await saveExpense({
+  name: 'Groceries',
+  amount: 50,
+  category: {
+    id: 3,
+    name: 'Food',
   },
 })
+if (success) console.log('Expense saved!')
 ```
+
+## Technologies Used
+
+- **React** - Frontend UI framework
+- **React Bootstrap** - Pre-styled UI components
+- **React Chart.js** - For visualizing expenses in a pie chart
+- **TypeScript** - For type safety
+
+## Limitations
+
+- All expenses are shown regardless of the date they were created.
+- The expense table is not paginated and is not too ideal for viewing a large set of expenses.
+- Users can't update or remove an expense.
+- Currency for the amount is defaulted to euros.
+
+## Challenges Faced
+
+- I've setup some arias for the buttons, but I've relied on react-bootstrap to help with accessibility features. This is an area I'd definitely like to learn more down the line.
+- I was initially unsure of how best to setup the UI for the app. I checked some similar apps, but most were a bit too complex. I've decided to keep everything in one screen so the information is readily available to users.
+- I chose a default set of categories to simplify filtering the table and displaying data on the chart. I initially thought to allow free-text categories, but that would've required going through expenses to identify unique categories.
+- Since I was new to Express.js, I initially built the client side using the browser's storage before transitioning to the backend once it was setup.
