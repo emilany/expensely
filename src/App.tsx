@@ -11,15 +11,27 @@ import { AddNewExpenseRequest, Expense } from './utils/types'
 const App = () => {
   const [expenses, setExpenses] = useState<Expense[]>([])
   const [filteredExpenses, setFilteredExpenses] = useState<Expense[]>()
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>()
   const [isOpenExpenseFormModal, setIsOpenExpenseFormModal] = useState(false)
 
   const handleUpdateExpenses = useCallback(async () => {
-    setExpenses(await fetchExpenses())
+    const updatedExpenses = await fetchExpenses()
+    setExpenses(updatedExpenses)
   }, [])
 
   useEffect(() => {
     handleUpdateExpenses()
   }, [])
+
+  useEffect(() => {
+    setFilteredExpenses(
+      selectedCategoryId
+        ? expenses.filter(
+            (expense) => expense.category.id === selectedCategoryId
+          )
+        : undefined
+    )
+  }, [expenses, selectedCategoryId])
 
   const handleSaveExpense = async (expense: AddNewExpenseRequest) => {
     const success = await saveExpense(expense)
@@ -30,12 +42,8 @@ const App = () => {
 
   const handleCloseExpenseFormModal = () => setIsOpenExpenseFormModal(false)
 
-  const handleFilterExpenses = (categoryId: string | undefined) => {
-    setFilteredExpenses(
-      categoryId
-        ? expenses.filter((expense) => expense.category.id === categoryId)
-        : expenses
-    )
+  const handleFilterExpenses = (categoryId?: string) => {
+    setSelectedCategoryId(categoryId)
   }
 
   return (
