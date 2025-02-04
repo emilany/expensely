@@ -22,15 +22,19 @@ export const getSortedExpenses = (
     const itemA =
       sortCriteria === ExpenseSortCriteria.CATEGORY
         ? a.category.name
-        : a[sortCriteria].toString()
+        : a[sortCriteria]
     const itemB =
       sortCriteria === ExpenseSortCriteria.CATEGORY
         ? b.category.name
-        : b[sortCriteria].toString()
+        : b[sortCriteria]
+
+    if (typeof itemA === 'number' && typeof itemB === 'number') {
+      return sortOrder === SortOrder.ASC ? itemA - itemB : itemB - itemA
+    }
 
     return sortOrder === SortOrder.ASC
-      ? itemA.localeCompare(itemB)
-      : itemB.localeCompare(itemA)
+      ? itemA.toString().localeCompare(itemB.toString())
+      : itemB.toString().localeCompare(itemA.toString())
   })
 
 /**
