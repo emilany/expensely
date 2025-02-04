@@ -61,7 +61,10 @@ const App = () => {
       )}
 
       <div className="app__content">
-        <ExpenseTable expenses={filteredExpenses || expenses} />
+        <ExpenseTable
+          expenses={filteredExpenses || expenses}
+          hasSelectedCategory={!!selectedCategoryId}
+        />
         <ExpenseChart expenses={expenses} />
       </div>
 

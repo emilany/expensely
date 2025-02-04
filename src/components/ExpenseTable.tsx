@@ -9,9 +9,10 @@ import { Expense, ExpenseSortCriteria, SortOrder } from '../utils/types'
 
 type Props = {
   expenses: Expense[]
+  hasSelectedCategory: boolean
 }
 
-const ExpenseTable = ({ expenses }: Props) => {
+const ExpenseTable = ({ expenses, hasSelectedCategory }: Props) => {
   const [sortCriteria, setSortCriteria] = useState<ExpenseSortCriteria>(
     ExpenseSortCriteria.DATE
   )
@@ -20,7 +21,9 @@ const ExpenseTable = ({ expenses }: Props) => {
   if (expenses.length === 0) {
     return (
       <Card className="expense-table expense-table--empty">
-        <h5>There are no expenses</h5>
+        <h5>
+          There are no expenses{hasSelectedCategory ? ' in this category' : ''}
+        </h5>
       </Card>
     )
   }
