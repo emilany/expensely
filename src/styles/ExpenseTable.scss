@@ -2,6 +2,8 @@
   display: flex;
   overflow: hidden;
   min-height: 500px;
+  max-height: 500px;
+  overflow: scroll;
 
   &--empty {
     justify-content: center;
