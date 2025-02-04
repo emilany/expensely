@@ -51,7 +51,11 @@ const App = () => {
       <div className="app__heading">
         <h1>Expensely</h1>
 
-        <Button variant="primary" onClick={handleOpenExpenseFormModal}>
+        <Button
+          className="app__button"
+          variant="primary"
+          onClick={handleOpenExpenseFormModal}
+        >
           Add Expense
         </Button>
       </div>

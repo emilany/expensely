@@ -1,6 +1,11 @@
+@import './mixins';
+
 .category-dropdown {
   margin-bottom: 20px;
-  align-self: flex-start;
+
+  @include md {
+    align-self: flex-start;
+  }
 
   .dropdown-item {
     text-transform: capitalize;

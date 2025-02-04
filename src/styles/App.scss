@@ -1,3 +1,5 @@
+@import './mixins';
+
 .app {
   display: flex;
   flex-direction: column;
@@ -5,11 +7,41 @@
   box-sizing: border-box;
   padding: 50px;
 
+  @include md {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  @include lg {
+    max-width: 992px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  @include xl {
+    max-width: 1200px;
+  }
+
   &__heading {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
+    flex-direction: column;
+    margin-bottom: 20px;
+    text-align: center;
+
+    @include sm {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+  }
+
+  &__button {
+    margin-top: 10px;
+
+    @include sm {
+      margin-top: 0;
+    }
   }
 
   &__content {
@@ -17,25 +49,10 @@
     flex-direction: column;
     row-gap: 24px;
 
-    @media (min-width: 768px) {
+    @include md {
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: 24px;
     }
-  }
-
-  @media (min-width: 768px) {
-    padding-left: 25px;
-    padding-right: 25px;
-  }
-
-  @media (min-width: 992px) {
-    max-width: 970px;
-    padding-left: 0px;
-    padding-right: 0px;
-  }
-
-  @media (min-width: 1200px) {
-    max-width: 1200px;
   }
 }

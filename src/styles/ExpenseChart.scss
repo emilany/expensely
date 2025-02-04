@@ -1,7 +1,13 @@
+@import './mixins';
+
 .expense-chart {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 500px;
-  max-height: 500px;
+  padding: 12px;
+
+  @include md {
+    min-height: 500px;
+    max-height: 500px;
+  }
 }
