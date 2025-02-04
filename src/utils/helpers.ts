@@ -61,4 +61,5 @@ export const groupExpensesByCategory = (expenses: Expense[]): GroupedExpenses =>
  * @param amount the amount to format
  * @returns the formatted amount
  */
-export const getFormattedAmount = (amount: number) => `€${amount.toFixed(2)}`
+export const getFormattedAmount = (amount: number) =>
+  `€${amount.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
