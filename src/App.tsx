@@ -53,6 +53,7 @@ const App = () => {
 
         <Button
           className="app__button"
+          aria-label="Add expense"
           variant="primary"
           onClick={handleOpenExpenseFormModal}
         >

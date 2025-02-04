@@ -114,10 +114,14 @@ const AddExpenseFormModal = ({ isOpen, onSaveExpense, onClose }: Props) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
+        <Button variant="secondary" onClick={onClose} aria-label="Close modal">
           Close
         </Button>
-        <Button variant="primary" onClick={handleSaveExpense}>
+        <Button
+          variant="primary"
+          onClick={handleSaveExpense}
+          aria-label="Save expense"
+        >
           Save
         </Button>
       </Modal.Footer>
