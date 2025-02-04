@@ -1,0 +1,27 @@
+// Large phones (iPhone Plus, small tablets)
+@mixin sm {
+  @media (min-width: 640px) {
+    @content;
+  }
+}
+
+// Tablets (iPad, small laptops)
+@mixin md {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+// Laptops (MacBook Air, small desktops)
+@mixin lg {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+// Large desktops, high-res screens
+@mixin xl {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
