@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import { useState } from 'react'
 import { Card, Table } from 'react-bootstrap'
+import { ArrowDown, ArrowUp } from 'react-bootstrap-icons'
 import '../styles/ExpenseTable.scss'
 import { dateFormat, ExpenseTableHeaders } from '../utils/constants'
 import { getFormattedAmount, getSortedExpenses } from '../utils/helpers'
@@ -46,6 +47,8 @@ const ExpenseTable = ({ expenses }: Props) => {
             {ExpenseTableHeaders.map((th) => (
               <th key={th.title} onClick={() => handleTableSort(th.sort)}>
                 {th.title}
+                {sortCriteria === th.sort &&
+                  (sortOrder === SortOrder.ASC ? <ArrowUp /> : <ArrowDown />)}
               </th>
             ))}
           </tr>
