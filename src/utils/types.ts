@@ -14,6 +14,11 @@ export type ExpenseCategory = {
   color: string
 }
 
+export type GroupedExpenses = Record<
+  string,
+  { category: ExpenseCategory; expenses: Expense[] }
+>
+
 export enum ExpenseSortCriteria {
   NAME = 'name',
   DATE = 'dateAdded',

@@ -65,7 +65,7 @@ const App = () => {
 
       <div className="app__content">
         <ExpenseTable expenses={filteredExpenses || expenses} />
-        <ExpenseChart />
+        <ExpenseChart expenses={expenses} />
       </div>
 
       {isOpenExpenseFormModal && (

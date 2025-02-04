@@ -1,4 +1,9 @@
-import { Expense, ExpenseSortCriteria, SortOrder } from './types'
+import {
+  Expense,
+  ExpenseSortCriteria,
+  GroupedExpenses,
+  SortOrder,
+} from './types'
 
 /**
  * Sorts a list of expenses based on a specified sort criteria and sort order.
@@ -27,3 +32,29 @@ export const getSortedExpenses = (
       ? itemA.localeCompare(itemB)
       : itemB.localeCompare(itemA)
   })
+
+/**
+ * Groups a list of expenses based on their category.
+ * @param expenses the expenses to group
+ * @returns the grouped expenses by category
+ */
+export const groupExpensesByCategory = (expenses: Expense[]): GroupedExpenses =>
+  expenses.reduce<GroupedExpenses>((data, expense) => {
+    const categoryId = expense.category.id
+    // check if the category exists in the object
+    if (!data[categoryId]) {
+      data[categoryId] = {
+        category: expense.category,
+        expenses: [],
+      }
+    }
+    data[categoryId].expenses.push(expense)
+    return data
+  }, {})
+
+/**
+ * Formats a given amount as a string in euros.
+ * @param amount the amount to format
+ * @returns the formatted amount
+ */
+export const getFormattedAmount = (amount: number) => `€${amount.toFixed(2)}`
