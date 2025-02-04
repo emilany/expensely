@@ -50,7 +50,7 @@ const AddExpenseFormModal = ({ isOpen, onSaveExpense, onClose }: Props) => {
       return
     }
 
-    if (!category) {
+    if (!category || isNaN(Number(category))) {
       setCategoryError('An expense category is required')
       return
     }
